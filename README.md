@@ -1,7 +1,16 @@
-# fin-crypto-spot-reversal
+# fin-crypto-spot-reversal — ARCHIVED
 
 Short-horizon mean-reversion (contrarian) strategy on Kraken spot crypto.
 Losers over 6 months tend to recover.
+
+**Status: DEAD.** The signal passes the pre-registered honesty framework
+(DSR 0.902) but the edge is not tradeable. The median monthly return is
+negative (-1.78% full, -5.93% test). Only 32% of months are positive.
+The entire backtest return comes from rare, explosive recovery outliers
+(one month: +2068%). Full-sample CAGR is -0.84%. The DSR margin is
+razor-thin (0.902 vs 0.90), and counting momentum trials from
+`fin-crypto-lab` would flip the verdict to FAIL (DSR 0.848 at N=6).
+This is a lottery ticket, not a strategy.
 
 ## Origin
 
@@ -70,10 +79,12 @@ uv run python -m fin_crypto_spot_reversal.run_sweep   # main reversal sweep
 uv run python -m fin_crypto_spot_reversal.run_blend    # blend test
 ```
 
-## Key risk
+## Why it's dead
 
-**Thin margin.** DSR is 0.902 vs 0.90 threshold. The signal barely passes.
-Full-sample CAGR is -0.84% (made money in test, lost in training).
-
-**Contrarian timing.** 78% test drawdown is severe. Mean-reversion can lose
-heavily during regime changes.
+1. **Lottery ticket distribution.** Median monthly return is negative. Only
+   32% of months are positive. The mean is inflated by rare outliers.
+2. **Thin DSR margin.** 0.902 vs 0.90 threshold. Adding momentum trials
+   from `fin-crypto-lab` (N_TRIALS=6) drops DSR to 0.848 (FAIL).
+3. **Severe drawdowns.** 78% test maxDD. Full-sample CAGR is -0.84%.
+4. **Fat tails.** Weekly return kurtosis is 466. The backtest result depends
+   on a handful of explosive recovery weeks.
